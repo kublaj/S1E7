@@ -1,6 +1,6 @@
 <?php
 
-namespace Controller;
+namespace WebtudorBlog\Controller;
 
 /**
  * Abstract parent controller.

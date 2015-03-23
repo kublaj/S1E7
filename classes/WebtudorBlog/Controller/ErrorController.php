@@ -1,7 +1,7 @@
 <?php
 
-namespace Controller;
-use View\Template;
+namespace WebtudorBlog\Controller;
+use WebtudorBlog\View\Template;
 
 /**
  * Controller to show error pages.

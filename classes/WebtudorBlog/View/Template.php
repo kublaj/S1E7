@@ -1,6 +1,6 @@
 <?php
 
-namespace View;
+namespace WebtudorBlog\View;
 
 class Template {
 	/**
@@ -25,7 +25,7 @@ class Template {
 	 */
 	public function __construct($file) {
 		$this->file = $file;
-		$this->templateDir = __DIR__ . '/../../templates/';
+		$this->templateDir = PROJECT_ROOT . '/templates/';
 	}
 
 	/**

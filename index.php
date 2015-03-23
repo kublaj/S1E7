@@ -1,7 +1,7 @@
 <?php
 
-use Controller\AbstractController;
-use Controller\ErrorController;
+use WebtudorBlog\Controller\AbstractController;
+use WebtudorBlog\Controller\ErrorController;
 
 /**
  * Automatically loads a class from the classes directory. Namespace\Classname becomes classes/Namespace/Classname.php
@@ -15,6 +15,8 @@ function __autoload($className) {
 	require($file);
 }
 
+//Define an easy to reference folder root
+define('PROJECT_ROOT', __DIR__);
 
 // Split the request URI part into pieces
 // e.g. /posts/some-post becomes ['', 'posts', 'some-post']
@@ -22,20 +24,31 @@ $url = explode('/', $_SERVER['REQUEST_URI']);
 
 
 //A list of all controllers
-$controllers = array();
+$controllers = array('WebtudorBlog\\Controller\\BlogController');
+
+//Output correct headers for UTF-8 encoding
+header('Content-Type: text/html;charset=utf-8');
 
 //Loop over all controllers and find the one that is actually going to handle our request.
 foreach ($controllers as $controllerClass) {
 	/**
 	 * @var AbstractController $controllerClass
 	 */
+	//Get the action from the controller
 	$action = $controllerClass::getAction($url);
+
 	if ($action !== null) {
+		//Found an action, let's use it!
+
+		//Instantiate new class
 		$controller = new $controllerClass();
+		//Create the function name as do + the action name, first letter upper case
 		$functionName = 'do' . ucfirst($action);
 
+		//Call the action and output the returned content
 		echo $controller->$functionName($url);
 
+		//Exit the foreach loop
 		break;
 	}
 }
@@ -43,6 +56,7 @@ foreach ($controllers as $controllerClass) {
 
 // If no functionName is set, we didn't found any actions. Show the error page.
 if (!isset($functionName)) {
+	header('HTTP/1.1 404 Not Found');
 	$controller = new ErrorController();
 	echo $controller->doNotFound($url);
 }
