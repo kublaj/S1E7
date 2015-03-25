@@ -18,7 +18,7 @@ abstract class AbstractModel {
 	protected function getConnection() {
 		if (!self::$connection) {
 			//Create new connection with static settings
-			$connection = new PDO('mysql:dbname=webtudorblog;host=localhost', 'root', '');
+			$connection = new PDO('sqlite:' . PROJECT_ROOT . '/db/db.sqlite');
 
 			//Set UTF8 character set so data isn't corrupted
 			$connection->exec('SET NAMES utf8');
@@ -55,7 +55,8 @@ abstract class AbstractModel {
 
 		//In case of an error, throw a ModelException
 		if ((int)$connection->errorCode()) {
-			throw new ModelException($connection->errorInfo()[2], $connection->errorCode());
+			$errorInfo = $connection->errorInfo();
+			throw new ModelException($errorInfo[2], $connection->errorCode());
 		}
 
 		//Return result rows
