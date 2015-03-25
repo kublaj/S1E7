@@ -1,10 +1,10 @@
 CREATE TABLE posts (
-  id BIGINT PRIMARY KEY AUTO_INCREMENT COMMENT 'Technical ID',
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
   created DATETIME NOT NULL,
-  slug VARCHAR(255) COLLATE latin1_bin NOT NULL COMMENT 'URL part for post',
+  slug VARCHAR(255) NOT NULL,
   title VARCHAR(255) NOT NULL,
   excerpt MEDIUMTEXT NOT NULL,
   content MEDIUMTEXT NOT NULL,
 
-  UNIQUE u_slug(slug)
-) CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT 'Stores blog posts';
+  UNIQUE (slug)
+);
