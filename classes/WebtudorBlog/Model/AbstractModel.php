@@ -19,13 +19,7 @@ abstract class AbstractModel {
 		if (!self::$connection) {
 			//Create new connection with static settings
 			$connection = new PDO('sqlite:' . PROJECT_ROOT . '/db/db.sqlite');
-
-			//Set UTF8 character set so data isn't corrupted
-			$connection->exec('SET NAMES utf8');
-
-			//Strict MySQL mode, reject invalid values
-			$connection->exec('SET SESSION sql_mode = "STRICT_ALL_TABLES"');
-
+			
 			//Store connection in static variable
 			self::$connection = $connection;
 		}
